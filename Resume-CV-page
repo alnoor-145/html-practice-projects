@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume - Al Noor</title>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Al Noor</h1>
+        <p>Aspiring Web Developer</p>
+        <p>Email: <a href="mailto:noor2305101145@diu.edu.bd">noor2305101145@diu.edu.bd</a></p>
+        <p>Phone: <a href="tel:+8801792656004">+8801792656004</a></p>
+    </header>
+
+    <hr>
+
+    <!-- About -->
+    <section>
+        <h2>Profile</h2>
+        <p>
+            CSE student at Daffodil International University.
+            Currently learning Web Development with a focus on HTML and building practice projects.
+        </p>
+    </section>
+
+    <!-- Education -->
+    <section>
+        <h2>Education</h2>
+        <table border="1" cellpadding="5">
+            <tr>
+                <th>Degree</th>
+                <th>Institute</th>
+                <th>Year</th>
+            </tr>
+            <tr>
+                <td>BSc in CSE</td>
+                <td>Daffodil International University</td>
+                <td>2023 - Present</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- Skills -->
+    <section>
+        <h2>Skills</h2>
+        <ul>
+            <li>HTML</li>
+            <li>Semantic HTML</li>
+            <li>Basic Web Page Structure</li>
+        </ul>
+    </section>
+
+    <!-- Projects -->
+    <section>
+        <h2>Projects</h2>
+        <ul>
+            <li>Personal Profile Page (HTML)</li>
+            <li>Resume Page (HTML)</li>
+        </ul>
+    </section>
+
+    <!-- Career Goal -->
+    <section>
+        <h2>Career Objective</h2>
+        <p>
+            To become a skilled Web Developer by learning modern web technologies
+            and building real-world projects.
+        </p>
+    </section>
+
+</body>
+</html>
+NN
