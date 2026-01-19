@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Master Project - Al Noor</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background:#f4f4f4;
+            padding:20px;
+        }
+        .container {
+            background:#fff;
+            padding:20px;
+            max-width:900px;
+            margin:auto;
+        }
+        .profile-header {
+            text-align:center;
+        }
+        img {
+            width:150px;
+            border-radius:50%;
+        }
+        section {
+            margin-top:30px;
+        }
+        table {
+            width:100%;
+            border-collapse:collapse;
+        }
+        table, th, td {
+            border:1px solid black;
+            padding:8px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<header class="profile-header">
+    <img src="profile-photo.jpg" alt="Profile Photo">
+    <h1>Al Noor</h1>
+    <p>Web Developer</p>
+</header>
+
+<hr>
+
+<!-- ABOUT -->
+<section>
+    <h2>About Me</h2>
+    <p>
+        Hello, I am Al Noor from Bangladesh. I am a student of Computer Science at
+        Daffodil International University. I am learning web development step by step.
+    </p>
+</section>
+
+<!-- LIST -->
+<section>
+    <h2>Skills List</h2>
+
+    <ul>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+    </ul>
+
+    <ol>
+        <li>Frontend</li>
+        <li>Backend</li>
+    </ol>
+
+    <dl>
+        <dt>HTML</dt>
+        <dd>Structure of web</dd>
+    </dl>
+</section>
+
+<!-- LINK -->
+<section>
+    <h2>Link</h2>
+    <a href="https://google.com" target="_blank">Visit Google</a>
+</section>
+
+<!-- IMAGE -->
+<section>
+    <h2>Image</h2>
+    <img src="https://via.placeholder.com/300" alt="Sample Image">
+</section>
+
+<!-- TABLE -->
+<section>
+    <h2>Table</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+        </tr>
+        <tr>
+            <td>Al Noor</td>
+            <td>22</td>
+        </tr>
+    </table>
+</section>
+
+<!-- BLOCK & INLINE -->
+<section>
+    <h2>Block & Inline</h2>
+    <div>I am a block element (div)</div>
+    <span>I am inline (span)</span>
+</section>
+
+<!-- BUTTON -->
+<section>
+    <h2>Button</h2>
+    <button onclick="alert('Hello HTML')">Click Me</button>
+</section>
+
+<!-- FORM -->
+<section>
+    <h2>Form</h2>
+
+    <form>
+        <input type="text" placeholder="Name"><br><br>
+        <input type="email" placeholder="Email"><br><br>
+        <input type="password" placeholder="Password"><br><br>
+
+        <input type="radio" name="gender"> Male
+        <input type="radio" name="gender"> Female <br><br>
+
+        <input type="checkbox"> HTML
+        <input type="checkbox"> CSS <br><br>
+
+        <input type="submit">
+    </form>
+</section>
+
+<!-- MORE INPUT TYPES -->
+<section>
+    <h2>More Input Types</h2>
+    <input type="date"><br><br>
+    <input type="time"><br><br>
+    <input type="number"><br><br>
+    <input type="range"><br><br>
+    <input type="color"><br><br>
+    <input type="file"><br><br>
+    <input type="search"><br><br>
+    <input type="tel"><br><br>
+    <input type="url"><br><br>
+</section>
+
+<!-- SELECT -->
+<section>
+    <h2>Select Option</h2>
+    <select>
+        <optgroup label="Frontend">
+            <option>HTML</option>
+            <option>CSS</option>
+        </optgroup>
+        <optgroup label="Backend">
+            <option>PHP</option>
+            <option>Node.js</option>
+        </optgroup>
+    </select>
+</section>
+
+<!-- FIELDSET -->
+<section>
+    <h2>Fieldset</h2>
+    <form>
+        <fieldset>
+            <legend>Personal Info</legend>
+            <input type="text" placeholder="Your Name">
+        </fieldset>
+    </form>
+</section>
+
+<!-- PROGRESS & METER -->
+<section>
+    <h2>Progress & Meter</h2>
+    <progress value="70" max="100"></progress><br><br>
+    <meter value="0.6"></meter>
+</section>
+
+<!-- CODE & PRE -->
+<section>
+    <h2>Code</h2>
+    <code>console.log("Hello");</code>
+
+    <pre>
+function test() {
+    return true;
+}
+    </pre>
+</section>
+
+<!-- CANVAS -->
+<section>
+    <h2>Canvas</h2>
+    <canvas width="200" height="100" style="border:1px solid black;"></canvas>
+</section>
+
+<!-- SVG -->
+<section>
+    <h2>SVG</h2>
+    <svg width="100" height="100">
+        <circle cx="50" cy="50" r="40" fill="green"/>
+    </svg>
+</section>
+
+<!-- SEMANTIC -->
+<section>
+    <article>
+        <h2>Article</h2>
+        <p>This is an article section.</p>
+    </article>
+
+    <aside>
+        <p>This is aside content.</p>
+    </aside>
+</section>
+
+<!-- DETAILS -->
+<section>
+    <details>
+        <summary>Click to see details</summary>
+        <p>Hidden content</p>
+    </details>
+</section>
+
+<!-- ENTITIES -->
+<section>
+    <h2>HTML Entities</h2>
+    <p>&lt;h1&gt; Heading</p>
+    <p>&copy; 2026</p>
+    <p>&nbsp; Space</p>
+</section>
+
+<!-- TIME -->
+<section>
+    <p>Class starts at <time datetime="2026-02-01">1 February 2026</time></p>
+</section>
+
+<!-- ADDRESS -->
+<address>
+    Written by Al Noor <br>
+    DIU, Bangladesh
+</address>
+
+<!-- BDO -->
+<p><bdo dir="rtl">This text is right to left</bdo></p>
+
+<!-- FOOTER -->
+<footer>
+    <p>© 2026 Al Noor</p>
+</footer>
+
+</div>
+</body>
+</html>
