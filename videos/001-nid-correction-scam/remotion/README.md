@@ -8,7 +8,7 @@ tazim-style স্কিলের নিজস্ব পরিচয়ে ব�
 ## দরকারি ফাইল
 | ফাইল | কী |
 |---|---|
-| `public/voice.wav` | ভয়েসওভার (git-এ রাখা হয় না)। ElevenLabs-এর MP3 থেকে বানানো, ভলিউম -16 LUFS-এ ঠিক করা। |
+| `public/voice.mp3` | ভয়েসওভার (git-এ রাখা হয় না)। ElevenLabs-এর MP3 থেকে বানানো, ভলিউম -16 LUFS-এ ঠিক করা। |
 | `src/timing.json` | প্রতিটা শব্দের সময়, ক্যাপশনের ভাগ আর দৃশ্য বদলের মুহূর্ত। `tools/align.py` দিয়ে SRT আর অডিও থেকে বানানো। |
 | `src/lib.tsx` | থিম, ফন্ট, ক্যাপশন, স্টিকার, ক্যারেক্টার, ফোন, ওডোমিটার, টগল, আইরিস |
 | `src/Video.tsx` | ১৫টা দৃশ্য (S1–S15) আর পুরো টাইমলাইন |
@@ -21,7 +21,7 @@ ffmpeg -i voice.mp3 -ac 1 -ar 44100 -c:a pcm_s16le /tmp/voice44.wav
 python3 tools/align.py voice.srt /tmp/voice44.wav src/timing.json
 ```
 ```bash
-ffmpeg -y -i /tmp/voice44.wav -af "loudnorm=I=-16:TP=-1.5:LRA=11" -ar 48000 -ac 1 public/voice.wav
+ffmpeg -y -i /tmp/voice44.wav -af "loudnorm=I=-16:TP=-1.5:LRA=11" -ar 48000 -ac 1 -b:a 192k public/voice.mp3
 ```
 `align.py`-এর শেষে `anchor(...)` তালিকাটা নতুন স্ক্রিপ্টের শব্দের সাথে মিলিয়ে নিতে হবে।
 

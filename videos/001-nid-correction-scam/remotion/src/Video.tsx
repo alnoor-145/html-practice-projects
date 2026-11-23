@@ -646,7 +646,7 @@ export const Video: React.FC = () => {
   ];
   return (
     <AbsoluteFill style={{backgroundColor: C.bg, overflow: 'hidden'}}>
-      <Audio src={staticFile('voice.wav')} />
+      <Audio src={staticFile('voice.mp3')} />
       <Background t={t} />
       <div style={{position: 'absolute', inset: 0, transform: `translate(${sh.x}px, ${sh.y}px)`}}>
         <S1 t={t} />
