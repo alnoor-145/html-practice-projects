@@ -269,6 +269,8 @@ Facebook-এর "Tazim" প্রোফাইলের ১০টা ভিডি
    - `WordCaptions`, `StatCounter`, `DeviceMockup`, `NotificationPop`, `ChatStory`, `ListReveal`, `BarChart`, `Countdown`, `AudioWave`, `Flowchart`।
    - iris ট্রানজিশন।
 
+   **তৈরি টেমপ্লেট:** প্রথম ভিডিওর Remotion প্রজেক্ট আছে `videos/001-nid-correction-scam/remotion/`-এ (README দেখো)। পরের ভিডিওতে এটা কপি করে শুধু `src/Video.tsx`-এর দৃশ্যগুলো বদলাবে। `lib.tsx`-এর ক্যাপশন, স্টিকার, ক্যারেক্টার, ফোন, ওডোমিটার, টগল আর আইরিস একই থাকবে। ElevenLabs-এর SRT-তে ইংরেজি অঙ্ক আর হরফ থাকে, `tools/align.py` সেগুলো বাংলা অঙ্কে বদলায় আর শব্দ ধরে সময় বের করে।
+
    দৃশ্য বানানোর নিয়মে সাহায্য লাগলে `diagram-explainer-style` দেখবে। প্রথম ভিডিওর আগে content-engine-এ যোগ করতে হবে:
    - Facebook ১৬:৯ ফরম্যাট (এখন ১৬:৯ মানেই YouTube ব্র্যান্ডিং)।
    - Baloo Da 2 ফন্ট।
