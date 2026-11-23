@@ -1,0 +1,29 @@
+{
+  "name": "lali-kothay-cartoon",
+  "version": "1.0.0",
+  "private": true,
+  "description": "2D animated Bangla kids cartoon: Lali kothay? (Remotion project)",
+  "scripts": {
+    "start": "remotion studio",
+    "render": "remotion render LaliEpisode out/lali-kothay-full.mp4",
+    "render:part1": "remotion render LaliPart1 out/lali-kothay-part1.mp4",
+    "render:part2": "remotion render LaliPart2 out/lali-kothay-part2.mp4",
+    "render:nosubs": "remotion render LaliEpisode out/lali-kothay-no-subtitles.mp4 --props=props/no-subtitles.json",
+    "render:original-voice": "remotion render LaliEpisode out/lali-kothay-original-voice.mp4 --props=props/original-voice.json",
+    "render:preview": "remotion render LaliEpisode out/preview-540p.mp4 --scale=0.5",
+    "thumbnail": "remotion still Thumbnail out/thumbnail.png"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.540",
+    "remotion": "4.0.540",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "18.3.12",
+    "typescript": "5.6.3"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
