@@ -10,7 +10,7 @@ export const A = timing.anchors as Record<string, number>;
 export const WORDS = timing.words as {text: string; start: number; end: number}[];
 export const CHUNKS = timing.chunks as {start: number; end: number; words: number[]}[];
 export const VOICE_END = A.end;
-export const OUTRO_SEC = 6;
+export const OUTRO_SEC = 3.6;
 export const TOTAL_SEC = Math.ceil((timing.duration + OUTRO_SEC) * 10) / 10;
 
 export const useT = () => useCurrentFrame() / FPS;

@@ -1,4 +1,4 @@
-# ভিডিও ০০২: শীতে জমে থাকা গ্যাস (Remotion, ৯:১৬)
+# ভিডিও ০০৩: প্রিপেইড মিটারের হিসাব (Remotion, ৯:১৬)
 
 একটা ভয়েস, দুইটা সংস্করণ:
 | কম্পোজিশন | কোথায় দেবেন | ব্র্যান্ড |
@@ -11,10 +11,10 @@
 npm install
 ```
 ```bash
-npx remotion render src/index.ts Facebook out/v002-facebook.mp4 --crf=20
+npx remotion render src/index.ts Facebook out/v003-facebook.mp4 --crf=20
 ```
 ```bash
-npx remotion render src/index.ts YouTube out/v002-youtube.mp4 --crf=20
+npx remotion render src/index.ts YouTube out/v003-youtube.mp4 --crf=20
 ```
 আগে দেখে নিতে চাইলে:
 ```bash
@@ -28,9 +28,15 @@ npx remotion studio src/index.ts
 | `src/timing.json` | প্রতিটা শব্দের সময় আর দৃশ্য বদলের মুহূর্ত |
 | `tools/align.py` | SRT আর অডিও থেকে `timing.json` বানায়, `tools/anchors.json`-এর বাক্যাংশ ধরে |
 | `src/lib.tsx` | থিম, ফন্ট, ক্যাপশন (৯:১৬), স্টিকার, চরিত্র, ফোন, ওডোমিটার, টগল, আইরিস |
-| `src/Video.tsx` | ১০টা দৃশ্য: রান্নাঘরের কাটা-দৃশ্য (রাত থেকে ভোর), আসল ঘটনা, Follow, গল্প, ফায়ার সার্ভিসের ধারণা, পোড়া রোগীর বার, ৩ নিয়ম (ব্লুপ্রিন্ট), কথা ছাড়া শেষ দৃশ্য |
+| `src/Video.tsx` | ৯টা দৃশ্য: মিটারে ৬৬০ (হুক), দোকানদার আর জুনের খবর, Follow, আব্বুর গল্প, টাকা-কাটা বার, ঘোষণার টাইমলাইন, ৩টা কাজ (ব্লুপ্রিন্ট), পরিবারে পাঠানো, কমেন্ট আর শেষ লাইন |
+| `tools/merge_parts.py` | ElevenLabs-এর কয়েক ভাগ (MP3 + SRT) জুড়ে একটা ভয়েস আর একটা SRT বানায় |
 
 ## নতুন ভয়েস বা SRT দিলে
+ভয়েস কয়েক ভাগে থাকলে আগে জুড়ে নিন (মাঝে ০.৪ সেকেন্ড বিরতি):
+```bash
+python tools/merge_parts.py voice44.wav voice.srt 0.4 part1.mp3 part1.srt part2.mp3 part2.srt
+```
+এক ভাগ হলে:
 ```bash
 ffmpeg -i voice.mp3 -ac 1 -ar 44100 -c:a pcm_s16le voice44.wav
 ```

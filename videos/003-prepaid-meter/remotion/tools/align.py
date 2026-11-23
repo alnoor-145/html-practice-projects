@@ -3,9 +3,10 @@ import sys, re, json, numpy as np, wave
 srt_path, wav_path, out_path, anchors_path = sys.argv[1:5]
 BN = str.maketrans('0123456789', '০১২৩৪৫৬৭৮৯')
 FIX = [(r'\[[^\]]*\]\s*', ''), (r'16 November', '১৬ নভেম্বর'), (r'\bECর', 'ইসির'), (r'\bECকে', 'ইসিকে'),
-       (r'\bEC\b', 'ইসি'), (r'\bGD\b', 'জিডি'), (r'social mediaয়', 'সোশ্যাল মিডিয়ায়'), (r'online\s+এ', 'online-এ'), (r'Burn Institute এর', 'বার্ন ইনস্টিটিউটের'), (r'Follow বা subscribe', 'Follow বা Subscribe'),
+       (r'\bEC\b', 'ইসি'), (r'\bGD\b', 'জিডি'), (r'social mediaয়', 'সোশ্যাল মিডিয়ায়'), (r'online\s+এ', 'online-এ'), (r'Burn Institute এর', 'বার্ন ইনস্টিটিউটের'), (r'[Ff]ollow বা subscribe', 'Follow বা Subscribe'),
+       (r'DPDCর', 'ডিপিডিসির'), (r'DPDC', 'ডিপিডিসি'), (r'messageটা', 'মেসেজটা'), (r'hotline এ', 'হটলাইনে'), (r'loadের', 'লোডের'), (r'meterে', 'মিটারে'),
        (r'[Rr]echarge এর', 'রিচার্জের'), (r'[Rr]echarge এ\b', 'রিচার্জে'), (r'[Rr]echarge', 'রিচার্জ'),
-       (r'demand charge', 'ডিমান্ড চার্জ'), (r'\bcharge', 'চার্জ'), (r'load এর', 'লোডের'), (r'\bload\b', 'লোড'),
+       (r'[Dd]emand charge', 'ডিমান্ড চার্জ'), (r'\bcharge', 'চার্জ'), (r'load এর', 'লোডের'), (r'\bload\b', 'লোড'),
        (r'kilowatt', 'কিলোওয়াট'), (r'\bVAT\b', 'ভ্যাট'), (r'Single phase meter এ', 'সিঙ্গেল ফেজ মিটারে'),
        (r'Single phase', 'সিঙ্গেল ফেজ'), (r'\bmeter\b', 'মিটার'), (r'বিয়াল্লিশ', 'বেয়াল্লিশ'),
        (r'([A-Za-z0-9]) (এ|তে)(?=[\s,।?"]|$)', r'\1-\2')]

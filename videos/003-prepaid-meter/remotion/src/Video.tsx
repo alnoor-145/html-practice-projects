@@ -12,8 +12,6 @@ const wordAt = (text: string, after = 0) => {
 };
 const lerp = (a: number, b: number, k: number) => a + (b - a) * clamp01(k);
 const END = A.end;
-// part 2 (when it arrives) starts at A.puzzle; until then the waterfall holds to the end
-const PART2 = (A as Record<string, number>).puzzle ?? END + 0.4;
 
 const EXAMPLE_NOTE = 'উদাহরণ: ২ কিলোওয়াট লোড · ডিপিডিসির হার · আনুমানিক';
 const Note: React.FC<{top: number; o?: number}> = ({top, o = 1}) => (
@@ -217,7 +215,7 @@ const S4: React.FC<{t: number}> = ({t}) => {
 const SCALE = 0.8, BAR_X = 120, BAR_W = 250, BAR_BOTTOM = 1290;
 type Piece = {key: string; amount: number; color: string; cut: number};
 const S5: React.FC<{t: number}> = ({t}) => {
-  const a = A.three, b = PART2;
+  const a = A.three, b = A.puzzle;
   const n252 = A.n252;
   const pieces: Piece[] = [
     {key: 'vat', amount: 47.62, color: C.info, cut: A.vat48},
@@ -235,7 +233,7 @@ const S5: React.FC<{t: number}> = ({t}) => {
   ];
   const glow = ramp(t, A.left, A.left + 0.5);
   return (
-    <Stage t={t} a={a} b={b + 0.3} noFadeOut>
+    <Stage t={t} a={a} b={b}>
       <div style={{position: 'absolute', left: 60, right: 60, top: 270, textAlign: 'center', transform: `scale(${pop(t, a + 0.1)})`}}>
         <Title size={60}>৳১,০০০ থেকে আগে কাটে</Title>
         <Title size={60} color={C.warn}>৩টা জিনিস</Title>
@@ -284,21 +282,224 @@ const S5: React.FC<{t: number}> = ({t}) => {
   );
 };
 
-// ---------------- temporary outro while part 2 is missing ----------------
-const S_END: React.FC<{t: number; platform: Platform}> = ({t, platform}) => {
-  const a = PART2 + 0.2, br = BRAND[platform];
-  const on = ease((t - a - 1.6) / 0.3);
-  if ((A as Record<string, number>).puzzle !== undefined) return null;
+// ---------------- S6: the announcement puzzle (timeline) ----------------
+const S6: React.FC<{t: number}> = ({t}) => {
+  const a = A.puzzle, b = A.todo;
+  const nodes = [
+    {at: a + 1.2, month: 'জুন', text: 'খবর: মাসিক চার্জ আর কাটবে না', col: C.good},
+    {at: A.july, month: 'জুলাই', text: 'খবর: ঘোষণার পরেও চার্জ কাটছে', col: C.warn},
+    {at: A.sept, month: 'সেপ্টেম্বর', text: 'ডিপিডিসি: ডিমান্ড চার্জ আর মিটার ভাড়া প্রযোজ্য', col: C.danger},
+  ];
+  const fill = t < A.july ? 0 : t < A.sept ? 0.5 : 1;
   return (
-    <Stage t={t} a={a} b={a + OUTRO_SEC + 1} noFadeOut>
-      <div style={{position: 'absolute', left: 60, right: 60, top: 520, textAlign: 'center', transform: `scale(${pop(t, a + 0.1)})`}}>
-        <Title size={84}>বাকি অংশ আসছে…</Title>
+    <Stage t={t} a={a} b={b}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 280, display: 'flex', justifyContent: 'center'}}>
+        <Sticker t={t} at={a + 0.1} text="তাহলে সরকারি ঘোষণা?" color={C.signature} rotate={-3} size={62} />
       </div>
-      <div style={{position: 'absolute', left: 150, right: 150, top: 900, padding: '18px 26px', borderRadius: 999, background: C.surface, border: '2px solid rgba(139,108,255,0.5)', display: 'flex', alignItems: 'center', gap: 20, opacity: ramp(t, a + 1, a + 1.4)}}>
+      <div style={{position: 'absolute', left: 120, top: 470, width: 10, height: 640, borderRadius: 8, background: 'rgba(255,255,255,0.15)'}} />
+      <div style={{position: 'absolute', left: 120, top: 470, width: 10, height: 640 * ease(fill), borderRadius: 8, background: C.signature}} />
+      {nodes.map((n, i) => {
+        const k = pop(t, n.at);
+        if (t < n.at - 0.1) return null;
+        return (
+          <div key={i} style={{position: 'absolute', left: 90, right: 70, top: 440 + i * 300, display: 'flex', alignItems: 'flex-start', gap: 30, opacity: clamp01(k * 1.5), transform: `translateX(${(1 - k) * 60}px)`}}>
+            <div style={{width: 70, height: 70, borderRadius: 99, background: n.col, border: '6px solid #fff', flexShrink: 0}} />
+            <div style={{flex: 1, padding: '20px 26px', borderRadius: 26, background: 'rgba(255,255,255,0.07)', borderLeft: `10px solid ${n.col}`}}>
+              <div style={{fontFamily: FONT_BN, fontWeight: 800, fontSize: 42, color: n.col}}>{n.month} ২০২৬</div>
+              <div style={{fontFamily: FONT_BN, fontWeight: 700, fontSize: 38, lineHeight: 1.3, color: C.text}}>{n.text}</div>
+            </div>
+          </div>
+        );
+      })}
+      {t > A.still - 0.1 && (
+        <div style={{position: 'absolute', right: 70, top: 1080}}>
+          <Sticker t={t} at={A.still} text="এখনো প্রযোজ্য" color={C.danger} rotate={-6} size={56} />
+        </div>
+      )}
+    </Stage>
+  );
+};
+
+// ---------------- S7: three things to do (blueprint) ----------------
+const Panel: React.FC<{t: number; a: number; b: number; children: React.ReactNode}> = ({t, a, b, children}) => {
+  if (t < a - 0.05 || t > b + 0.05) return null;
+  const o = clamp01((t - a + 0.02) / 0.2) * clamp01((b - t) / 0.2);
+  return <div style={{position: 'absolute', left: 0, right: 0, top: 580, height: 760, opacity: o, transformOrigin: 'top center', transform: `translateY(${(1 - ease((t - a) / 0.3)) * 40}px) scale(1.1)`}}>{children}</div>;
+};
+const S7: React.FC<{t: number}> = ({t}) => {
+  const a = A.todo, b = A.share;
+  const steps = [{at: A.k1, n: '১', label: 'রসিদ রাখুন'}, {at: A.k2, n: '২', label: 'লোড জানুন'}, {at: A.k3, n: '৩', label: 'নিজের মিটার'}];
+  const n16 = A.n16116;
+  const typed = '১৬১১৬'.slice(0, Math.max(0, Math.min(5, Math.floor((t - n16 + 0.15) / 0.12) + 1)));
+  return (
+    <Stage t={t} a={a} b={b}>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 260, textAlign: 'center', transform: `scale(${pop(t, a + 0.15)})`}}>
+        <Title size={70}>আপনি কী করবেন?</Title>
+      </div>
+      <div style={{position: 'absolute', left: 120, right: 120, top: 390, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start'}}>
+        <div style={{position: 'absolute', left: 60, right: 60, top: 40, height: 8, borderRadius: 8, background: 'rgba(255,255,255,0.2)'}} />
+        <div style={{position: 'absolute', left: 60, top: 40, height: 8, borderRadius: 8, background: C.signature, width: `${(t < A.k2 ? 0 : t < A.k3 ? 0.5 : 1) * (W - 360)}px`}} />
+        {steps.map((s, i) => {
+          const on = t >= s.at;
+          return (
+            <div key={i} style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8, zIndex: 1}}>
+              <div style={{width: 88, height: 88, borderRadius: 99, background: on ? C.signature : C.blueDeep, border: '4px solid rgba(255,255,255,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: FONT_BN, fontWeight: 800, fontSize: 48, color: '#fff', transform: `scale(${on ? 1 + 0.15 * Math.sin(Math.PI * clamp01(pop(t, s.at))) : 0.9})`}}>{s.n}</div>
+              <div style={{fontFamily: FONT_BN, fontWeight: 800, fontSize: 30, color: on ? '#fff' : 'rgba(255,255,255,0.55)', whiteSpace: 'nowrap'}}>{s.label}</div>
+            </div>
+          );
+        })}
+      </div>
+      <Panel t={t} a={a} b={A.k1}>
+        <div style={{display: 'flex', justifyContent: 'center', marginTop: 120}}><Sticker t={t} at={wordAt('তিনটা', a)} text="৩টা কাজ" color={C.signature} rotate={-4} size={90} /></div>
+      </Panel>
+      <Panel t={t} a={A.k1} b={A.k2}>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <div style={{width: 520, padding: '30px 36px', borderRadius: 28, background: '#F5F7FF', boxShadow: '0 24px 50px rgba(0,0,0,0.4)', transform: `rotate(-3deg) scale(${pop(t, A.receipt)})`}}>
+            <div style={{display: 'flex', justifyContent: 'space-between', fontFamily: FONT_BN, fontWeight: 800, fontSize: 36, color: C.ink}}><span>রিচার্জের রসিদ</span><span style={{fontSize: 22, color: '#6B6890', border: '2px dashed #6B6890', borderRadius: 99, padding: '2px 12px'}}>উদাহরণ</span></div>
+            {[['মোট', '৳১,০০০'], ['ভ্যাট', '৳৪৮'], ['ডিমান্ড চার্জ', '৳২৫২'], ['মিটার ভাড়া', '৳৪০'], ['বিদ্যুৎ', '≈৳৬৬০']].map(([k, v], i) => (
+              <div key={i} style={{display: 'flex', justifyContent: 'space-between', marginTop: 14, paddingTop: 12, borderTop: '2px dashed #D3D0EA', fontFamily: FONT_BN, fontWeight: 700, fontSize: 32, color: i === 4 ? '#0E8A97' : C.ink, opacity: ramp(t, A.receipt + 0.2 + i * 0.25, A.receipt + 0.45 + i * 0.25)}}><span>{k}</span><span>{v}</span></div>
+            ))}
+          </div>
+        </div>
+        <div style={{display: 'flex', justifyContent: 'center', marginTop: 50}}>
+          <div style={{transform: `scale(${pop(t, wordAt('হিসাব', A.k1))})`}}><Chip size={40} color="#fff" bg="rgba(255,255,255,0.12)">📌 হিসাব মেলাতে লাগবে</Chip></div>
+        </div>
+      </Panel>
+      <Panel t={t} a={A.k2} b={A.k3}>
+        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24}}>
+          <div style={{transform: `scale(${pop(t, A.k2)})`}}><Meter t={t} w={250} value={<span>⚡ ? kW</span>} /></div>
+          <div style={{transform: `scale(${pop(t, A.load)})`}}><Chip size={40} color="#fff" bg="rgba(255,255,255,0.14)">অনুমোদিত লোড কত?</Chip></div>
+          <div style={{transform: `scale(${pop(t, wordAt('ডিমান্ড', A.k2))})`}}><Chip size={36} color="#fff" bg="rgba(255,77,109,0.3)">ডিমান্ড চার্জ = ৪২ × লোড</Chip></div>
+          {t > A.office - 0.1 && <div style={{transform: `scale(${pop(t, A.office)})`}}><Chip size={36} color="#fff" bg={C.signature}>🏢 বিদ্যুৎ অফিসে জিজ্ঞেস করুন</Chip></div>}
+        </div>
+      </Panel>
+      <Panel t={t} a={A.k3} b={A.real_extra}>
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 70}}>
+          <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 22}}>
+            <Meter t={t} w={280} value={<span>✓</span>} />
+            <div style={{transform: `scale(${pop(t, A.own)})`}}><Chip size={34} color={C.bg} bg={C.good}>নিজের কেনা মিটার</Chip></div>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10}}>
+            <div style={{fontFamily: FONT_BN, fontWeight: 700, fontSize: 38, color: '#fff'}}>মিটার ভাড়া</div>
+            <div style={{position: 'relative', fontFamily: FONT_BN, fontWeight: 800, fontSize: 96, color: '#fff'}}>৳৪০<Scribble t={t} at={wordAt('ভাড়া', A.own)} w={200} h={70} /></div>
+            {t > wordAt('লাগে', A.own) - 0.1 && <div style={{fontFamily: FONT_BN, fontWeight: 800, fontSize: 120, color: C.good, transform: `scale(${pop(t, wordAt('লাগে', A.own))})`}}>৳০</div>}
+          </div>
+        </div>
+      </Panel>
+      <Panel t={t} a={A.real_extra} b={b}>
+        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'flex-start', gap: 40, paddingLeft: 40}}>
+          <div style={{transform: `scale(${pop(t, A.real_extra)})`}}>
+            <Phone w={300} h={560} tilt={-5}>
+              <div style={{position: 'absolute', left: 0, right: 0, top: 70, textAlign: 'center', fontFamily: FONT_BN, fontWeight: 800, fontSize: 68, color: C.text}}>{t >= n16 - 0.15 ? typed : ''}<span style={{opacity: Math.sin(t * 8) > 0 ? 1 : 0, color: C.signature}}>|</span></div>
+              <div style={{position: 'absolute', left: 26, right: 26, top: 190, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 12}}>
+                {['১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯', '*', '০', '#'].map((k, i) => <div key={i} style={{height: 62, borderRadius: 99, background: 'rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: FONT_BN, fontWeight: 800, fontSize: 30, color: C.text}}>{k}</div>)}
+              </div>
+              <div style={{position: 'absolute', left: '50%', bottom: 34, marginLeft: -36, width: 72, height: 72, borderRadius: 99, background: C.good, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <svg width="32" height="32" viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.6 3.6a1 1 0 0 1-.25 1z" fill="#fff" /></svg>
+              </div>
+            </Phone>
+          </div>
+          <div style={{display: 'flex', flexDirection: 'column', gap: 26, marginTop: 40, width: 360}}>
+            <div style={{transform: `scale(${pop(t, A.real_extra + 0.3)})`, transformOrigin: 'left center'}}><Chip size={32} color="#fff" bg="rgba(255,255,255,0.12)">হিসাবের বাইরে কাটলে</Chip></div>
+            <div style={{transform: `scale(${pop(t, n16)})`, transformOrigin: 'left center'}}><Chip size={42} color="#fff" bg={C.signature}>ডিপিডিসি ১৬১১৬</Chip></div>
+            {t > A.other - 0.1 && <div style={{transform: `scale(${pop(t, A.other)})`, transformOrigin: 'left center'}}><Chip size={30} color="#fff" bg="rgba(255,255,255,0.14)">অন্য কোম্পানি: তাদের হটলাইন</Chip></div>}
+          </div>
+        </div>
+      </Panel>
+    </Stage>
+  );
+};
+
+// ---------------- S8: send it to whoever recharges ----------------
+const S8: React.FC<{t: number}> = ({t}) => {
+  const a = A.share, b = A.question;
+  const people: {kind: 'ammu' | 'abbu' | 'bhai'; label: string; x: number; y: number}[] = [
+    {kind: 'abbu', label: 'আব্বু', x: 700, y: 380},
+    {kind: 'ammu', label: 'আম্মু', x: 760, y: 700},
+    {kind: 'bhai', label: 'বড় ভাই', x: 640, y: 1000},
+  ];
+  const src = {x: 330, y: 820};
+  const sendAt = wordAt('পাঠান', a);
+  return (
+    <Stage t={t} a={a} b={b}>
+      <div style={{position: 'absolute', left: 90, top: 300, width: 560}}>
+        <Title size={56}>বাসায় যিনি</Title>
+        <Title size={56} color={C.info}>রিচার্জ করেন</Title>
+      </div>
+      <div style={{position: 'absolute', left: 200, top: 620, transform: `scale(${pop(t, a + 0.2)})`}}>
+        <Phone w={250} h={440} tilt={-6}>
+          <div style={{position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <div style={{width: 96, height: 96, borderRadius: 99, background: C.signature, display: 'flex', alignItems: 'center', justifyContent: 'center'}}><svg width="42" height="42" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="#fff" /></svg></div>
+          </div>
+        </Phone>
+      </div>
+      <svg width={W} height={1920} style={{position: 'absolute', inset: 0}}>
+        {people.map((p, i) => {
+          const tx = p.x + 40, ty = p.y + 110;
+          const cx = (src.x + tx) / 2, cy = Math.min(src.y, ty) - 140;
+          const draw = ease((t - sendAt - i * 0.15) / 0.6);
+          const len = 900;
+          const u = ((t - sendAt) * 0.9 + i * 0.3) % 1;
+          const bx = (1 - u) * (1 - u) * src.x + 2 * (1 - u) * u * cx + u * u * tx;
+          const by = (1 - u) * (1 - u) * src.y + 2 * (1 - u) * u * cy + u * u * ty;
+          return (
+            <g key={i}>
+              <path d={`M ${src.x} ${src.y} Q ${cx} ${cy} ${tx} ${ty}`} fill="none" stroke={C.signature} strokeWidth="6" strokeDasharray={len} strokeDashoffset={len * (1 - draw)} strokeLinecap="round" opacity="0.8" />
+              {draw >= 1 && <circle cx={bx} cy={by} r="12" fill={C.info} />}
+            </g>
+          );
+        })}
+      </svg>
+      {people.map((p, i) => (
+        <div key={i} style={{position: 'absolute', left: p.x, top: p.y, transform: `scale(${pop(t, sendAt + 0.3 + i * 0.2)})`, textAlign: 'center'}}>
+          <Bean kind={p.kind} size={130} t={t} mood="happy" phase={i} />
+          <div style={{fontFamily: FONT_BN, fontWeight: 800, fontSize: 30, color: C.text}}>{p.label}</div>
+        </div>
+      ))}
+      {t > A.fight - 0.1 && (
+        <div style={{position: 'absolute', left: 80, top: 1150}}>
+          <Sticker t={t} at={A.fight} text="ঝগড়াটা বেঁচে যাবে 😄" color={C.good} rotate={-3} size={50} textColor={C.bg} />
+        </div>
+      )}
+    </Stage>
+  );
+};
+
+// ---------------- S9: comment question, follow, key line ----------------
+const S9: React.FC<{t: number; platform: Platform}> = ({t, platform}) => {
+  const a = A.question, br = BRAND[platform];
+  const on = ease((t - A.cta_word) / 0.3);
+  const msg = 'ঢুকেছিল ৳৭১২';
+  const typeP = ramp(t, A.comment - 0.2, A.comment + 0.8);
+  const keyAt = END + 0.25;
+  return (
+    <Stage t={t} a={a} b={END + 10} noFadeOut>
+      <div style={{position: 'absolute', left: 0, right: 0, top: 300, display: 'flex', justifyContent: 'center'}}>
+        <Sticker t={t} at={a + 0.1} text="আপনার কত ঢুকেছিল?" color={C.warn} rotate={-3} size={66} textColor={C.bg} />
+      </div>
+      <div style={{position: 'absolute', left: 150, right: 150, top: 470, padding: '24px 28px', borderRadius: 30, background: C.surface, border: '2px solid rgba(255,255,255,0.12)', opacity: ramp(t, a + 0.4, a + 0.8)}}>
+        <div style={{display: 'flex', alignItems: 'center', gap: 14}}>
+          <div style={{width: 54, height: 54, borderRadius: 99, background: '#7A86B8'}} />
+          <div style={{flex: 1, height: 64, borderRadius: 32, background: C.surfaceHi, display: 'flex', alignItems: 'center', padding: '0 22px', fontFamily: FONT_BN, fontWeight: 700, fontSize: 34, color: C.text}}>
+            {t > A.comment - 0.2 ? msg.slice(0, Math.ceil(msg.length * typeP)) : <span style={{color: C.muted, fontSize: 28}}>কমেন্ট লিখুন…</span>}
+            <span style={{opacity: Math.sin(t * 8) > 0 ? 1 : 0, color: C.signature}}>|</span>
+          </div>
+        </div>
+        <div style={{marginTop: 10, textAlign: 'right', fontFamily: FONT_BN, fontWeight: 600, fontSize: 22, color: C.muted}}>উদাহরণ</div>
+      </div>
+      <div style={{position: 'absolute', left: 150, right: 150, top: 720, padding: '18px 26px', borderRadius: 999, background: C.surface, border: '2px solid rgba(139,108,255,0.5)', display: 'flex', alignItems: 'center', gap: 20, opacity: ramp(t, A.cta, A.cta + 0.4)}}>
         <div style={{width: 64, height: 64, borderRadius: 99, background: C.signature, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: FONT, fontWeight: 800, fontSize: 34, color: '#fff'}}>{br.initial}</div>
         <div style={{flex: 1, fontFamily: FONT, fontWeight: 800, fontSize: 38, color: C.text}}>{br.name}</div>
         <Toggle on={on} w={104} />
+        <div style={{fontFamily: FONT, fontWeight: 700, fontSize: 28, color: on > 0.5 ? C.signature : C.muted, minWidth: 150}}>{on > 0.5 ? br.done : br.btn}</div>
       </div>
+      <Confetti t={t} at={A.cta_word + 0.1} x={780} y={760} />
+      {t > keyAt - 0.1 && (
+        <div style={{position: 'absolute', left: 60, right: 60, top: 920, textAlign: 'center', transform: `scale(${pop(t, keyAt)})`}}>
+          <div style={{fontFamily: FONT_BN, fontWeight: 700, fontSize: 44, color: C.muted}}>পরের বার রিচার্জের পর</div>
+          <Title size={86}>আগে রসিদটা পড়ুন</Title>
+        </div>
+      )}
     </Stage>
   );
 };
@@ -306,23 +507,31 @@ const S_END: React.FC<{t: number; platform: Platform}> = ({t, platform}) => {
 export const Video: React.FC<{platform: Platform}> = ({platform}) => {
   useFonts();
   const t = useT();
+  const blueprint = ramp(t, A.todo - 0.05, A.todo + 0.1) * (1 - ramp(t, A.share - 0.1, A.share + 0.2));
   const srcs = [
     {from: A.june, to: A.follow, text: 'সূত্র: Observer, জুন ২০২৬'},
-    {from: A.vat, to: PART2, text: 'হার: ডিপিডিসি, সেপ্টেম্বর ২০২৬'},
+    {from: A.vat, to: A.puzzle, text: 'হার: ডিপিডিসি, সেপ্টেম্বর ২০২৬'},
+    {from: A.puzzle, to: A.sept, text: 'সূত্র: Observer, ঢাকা ট্রিবিউন'},
+    {from: A.sept, to: A.todo, text: 'সূত্র: TBS, Financial Express'},
+    {from: A.k3, to: A.share, text: 'সূত্র: ডিপিডিসি'},
   ];
   return (
     <AbsoluteFill style={{backgroundColor: C.bg, overflow: 'hidden'}}>
       <Audio src={staticFile('voice.mp3')} />
-      <Background t={t} blueprint={0} />
+      <Background t={t} blueprint={blueprint} />
       <S1 t={t} />
       <S2 t={t} />
       <S3 t={t} platform={platform} />
       <S4 t={t} />
       <S5 t={t} />
-      <S_END t={t} platform={platform} />
+      <S6 t={t} />
+      <S7 t={t} />
+      <S8 t={t} />
+      <S9 t={t} platform={platform} />
       <Vignette t={t} at={A.shock} />
       <Iris t={t} at={A.story} x={W / 2} y={900} />
       <Iris t={t} at={A.three} x={W / 2} y={900} />
+      <Iris t={t} at={A.todo} x={W / 2} y={900} />
       <BrandPill platform={platform} />
       {srcs.map((s, i) => <SourcePill key={i} t={t} from={s.from} to={s.to} text={s.text} />)}
       <Captions t={t} />
