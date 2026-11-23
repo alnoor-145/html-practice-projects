@@ -4,6 +4,18 @@ The user makes Bangla kids' cartoons (YouTube). They supply: ElevenLabs voice MP
 SRT files, and a ZIP of character/background pictures. They render the Remotion
 project themselves (give them a ZIP of the project, not a rendered video, unless asked).
 
+## Rule for every 2D animation request (the user's own words, summarised)
+- Whatever the user gives (pictures, files, a ZIP), **every character in the video must be
+  animated**: legs, hands/arms, mouth, eyes, head — and wings/tails/ears for animals.
+- If an asset is only a **still picture**, Claude must create the animation from it
+  itself (split it into parts and rig it, or redraw it as a rigged vector character in
+  the same look). Placing the still picture on screen and moving it as one piece is
+  NOT animation.
+- If an asset is **already animated** (sprite sheet, GIF/video, Lottie, a rigged file
+  with separate parts), use that animation as it is.
+- Mouth movement must be clearly visible from a normal viewing distance (big, readable
+  mouth shapes in sync with the voice), not a small overlay patch.
+
 ## Feedback on the first project (`lali-kothay-cartoon/`) — must fix next time
 - The picture ZIP is a **style/design reference only** ("characters should look like this").
   Do NOT just cut the pictures out and slide them around as one stiff piece.
@@ -25,5 +37,6 @@ project themselves (give them a ZIP of the project, not a rendered video, unless
   the voice, blinks, karaoke Bangla subtitles, camera punch-in on the speaker,
   sound effects + music, scene cuts tied to the SRT timing.
 
-(বাংলায়: জিপের ছবি শুধু চরিত্র দেখতে কেমন হবে বোঝার জন্য। আসল কাজ — চরিত্রের হাত, পা,
+(বাংলায়: ছবি বা ফাইল যেমনই হোক, ভিডিওর সব চরিত্রের হাত, পা, মুখ, চোখ নড়বে। শুধু স্থির ছবি হলে Claude নিজেই সেটা থেকে অ্যানিমেশন বানাবে; আগে থেকে অ্যানিমেশন থাকলে সেটাই ব্যবহার করবে।
+ জিপের ছবি শুধু চরিত্র দেখতে কেমন হবে বোঝার জন্য। আসল কাজ — চরিত্রের হাত, পা,
 ডানা, লেজ সব আলাদা করে নড়বে; হাঁটা-দৌড়ে হাত-পা ঠিকমতো চলবে।)
