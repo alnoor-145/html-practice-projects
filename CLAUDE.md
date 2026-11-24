@@ -1,4 +1,13 @@
-# Notes for Claude — 2D cartoon requests from this user
+# Notes for Claude — this user's video requests
+
+Two kinds of video work. Pick the matching rules:
+- **Motion-graphics / explainer video from an SRT** → follow
+  `EXPLAINER_VIDEO_INSTRUCTIONS.md` exactly (Bangla, short replies; asset loop →
+  analysis → the three questions → build → verify stills → preview mode by default).
+  @EXPLAINER_VIDEO_INSTRUCTIONS.md
+- **Story cartoon with characters (2D animation)** → the rules below.
+
+# 2D cartoon requests
 
 The user makes Bangla kids' cartoons (YouTube). They supply: ElevenLabs voice MP3s,
 SRT files, and a ZIP of character/background pictures. They render the Remotion
