@@ -158,9 +158,9 @@ const S1: React.FC<{t: number}> = ({t}) => {
         {t > A.days - 0.2 && (
           <>
             <div style={{position: 'absolute', left: 90, top: 300, transform: `scale(${pop(t, A.days)})`}}>
-              <div style={{width: 300, borderRadius: 26, overflow: 'hidden', background: '#F5F7FF', boxShadow: '0 16px 34px rgba(0,0,0,0.4)'}}>
+              <div style={{width: 380, borderRadius: 26, overflow: 'hidden', background: '#F5F7FF', boxShadow: '0 16px 34px rgba(0,0,0,0.4)'}}>
                 <div style={{height: 56, background: C.danger, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: FONT_BN, fontWeight: 800, fontSize: 30, color: '#fff'}}>ক্যালেন্ডার</div>
-                <div style={{height: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: FONT_BN, fontWeight: 800, fontSize: 52, color: C.ink}}>কয়েক দিন পর</div>
+                <div style={{height: 120, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: FONT_BN, fontWeight: 800, fontSize: 50, color: C.ink, whiteSpace: 'nowrap'}}>কয়েক দিন পর</div>
               </div>
             </div>
             <div style={{position: 'absolute', left: 760, top: 430, transform: `scale(${pop(t, A.fever - 0.1)})`}}><Thermo level={ramp(t, A.fever, A.fever + 1.4) * 0.9} /></div>
@@ -264,12 +264,13 @@ const S4: React.FC<{t: number}> = ({t}) => {
 };
 
 // ---------------- S5: night at the palm tree, then morning ----------------
+const STATS = A.stats + 0.6;
 const S5: React.FC<{t: number}> = ({t}) => {
-  const a = A.night, b = A.stats;
+  const a = A.night, b = STATS;
   const dawn = ease((t - A.morning) / 1.2);
   const fly = ease((t - A.dark - 0.1) / (A.bat - A.dark + 0.5));
   const away = ease((t - A.morning - 0.1) / 1.0);
-  const batX = lerp(lerp(1000, 640, fly), 1150, away), batY = lerp(lerp(260, 540, fly), 200, away);
+  const batX = lerp(lerp(1000, 460, fly), 1150, away), batY = lerp(lerp(260, 570, fly), 200, away);
   const sal = ramp(t, A.saliva, A.saliva + 1.4);
   const lower = ease((t - A.morning - 0.4) / 0.8);
   const glassIn = pop(t, A.glass - 0.6);
@@ -314,7 +315,7 @@ const S5: React.FC<{t: number}> = ({t}) => {
       {t > A.glass - 0.7 && (
         <div style={{position: 'absolute', left: 660, top: 860, transform: `scale(${glassIn})`}}><Glass w={210} fill={glassFill} dots={glassFill} t={t} /></div>
       )}
-      {t > A.glass && <Center top={1180}><Sticker t={t} at={A.glass + 0.2} text="সেই রসই আমাদের গ্লাসে!" color={C.rose} rotate={-3} size={50} /></Center>}
+      {t > A.glass - 0.2 && <Center top={1180}><Sticker t={t} at={A.glass - 0.1} text="সেই রসই আমাদের গ্লাসে!" color={C.rose} rotate={-3} size={50} /></Center>}
       <div style={{position: 'absolute', left: 80, top: 290, opacity: ramp(t, a + 0.2, a + 0.5)}}>
         <Chip size={36} bg="rgba(255,255,255,0.1)">{t < A.morning ? 'রাত · খেজুর গাছ' : 'সকাল'}</Chip>
       </div>
@@ -324,7 +325,7 @@ const S5: React.FC<{t: number}> = ({t}) => {
 
 // ---------------- S6: 348 cases, half with raw sap ----------------
 const S6: React.FC<{t: number}> = ({t}) => {
-  const a = A.stats, b = A.iedcr;
+  const a = STATS - 0.1, b = A.iedcr;
   const ring = ease((t - A.half) / 0.9) * 0.5;
   return (
     <Stage t={t} a={a} b={b}>
@@ -521,7 +522,7 @@ const S10: React.FC<{t: number}> = ({t}) => {
         })}
       </svg>
       {people.map((p, i) => (
-        <div key={i} style={{position: 'absolute', left: p.x, top: p.y, transform: `scale(${pop(t, sendAt + 0.3 + i * 0.2)})`, textAlign: 'center'}}>
+        <div key={i} style={{position: 'absolute', left: p.x, top: p.y, transform: `scale(${pop(t, a + 0.6 + i * 0.3)})`, textAlign: 'center'}}>
           <Bean kind={p.kind} size={130} t={t} mood="happy" phase={i} />
           <div style={{fontFamily: FONT_BN, fontWeight: 800, fontSize: 30, color: C.text}}>{p.label}</div>
         </div>
@@ -559,7 +560,7 @@ const S11: React.FC<{t: number; platform: Platform}> = ({t, platform}) => {
       <Confetti t={t} at={A.cta_word + 0.1} x={780} y={760} />
       {t > keyAt - 0.1 && (
         <div style={{position: 'absolute', left: 60, right: 60, top: 900, textAlign: 'center', transform: `scale(${pop(t, keyAt)})`}}>
-          <div style={{position: 'relative', display: 'inline-block', width: 220, height: 230}}>
+          <div style={{position: 'relative', display: 'inline-block', width: 220, height: 310}}>
             <div style={{position: 'absolute', left: 25, top: 30}}><Pot w={170} /></div>
             <div style={{position: 'absolute', left: 35, top: 190}}><Fire t={t} size={150} /></div>
             <Steam t={t} x={95} y={20} />
@@ -576,8 +577,8 @@ export const Video: React.FC<{platform: Platform}> = ({platform}) => {
   const t = useT();
   const srcs = [
     {from: A.news, to: A.follow, text: 'সূত্র: WHO, ৬ ফেব্রুয়ারি ২০২৬'},
-    {from: A.night, to: A.stats, text: 'সূত্র: আইইডিসিআর, WHO'},
-    {from: A.stats, to: A.iedcr, text: 'সূত্র: WHO, Al Jazeera/Reuters'},
+    {from: A.night, to: STATS, text: 'সূত্র: আইইডিসিআর, WHO'},
+    {from: STATS, to: A.iedcr, text: 'সূত্র: WHO, Al Jazeera/Reuters'},
     {from: A.iedcr, to: A.todo, text: 'সূত্র: আইইডিসিআর (জাগো নিউজ)'},
     {from: A.k1, to: A.share, text: 'পরামর্শ: WHO, আইইডিসিআর'},
   ];
