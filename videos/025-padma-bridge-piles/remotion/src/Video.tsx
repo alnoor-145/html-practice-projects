@@ -173,10 +173,10 @@ export const Cover: React.FC<{platform: Platform}> = ({platform}) => {
   return (
     <AbsoluteFill style={{backgroundColor: C.bg, overflow: 'hidden'}}>
       <Background t={0} blueprint={0} />
-      <Section t={2} top={880} />
-      <svg width={W} height={1920} style={{position: 'absolute', left: 0, top: 0}}><rect x="0" y="780" width={W} height="60" fill="#E9EEF8" /><Pillar x={300} y={880} h={100} w={110} /><Pillar x={780} y={880} h={100} w={110} /><Pile x={300} y={900} len={520} w={44} /><Pile x={780} y={900} len={520} w={44} /><Pile x={540} y={900} len={520} tilt={6} w={44} /></svg>
+      <Section t={2} top={1000} />
+      <svg width={W} height={1920} style={{position: 'absolute', left: 0, top: 0}}><rect x="0" y="900" width={W} height="60" fill="#E9EEF8" /><Pillar x={300} y={1000} h={100} w={110} /><Pillar x={780} y={1000} h={100} w={110} /><Pile x={300} y={1020} len={520} w={44} /><Pile x={780} y={1020} len={520} w={44} /><Pile x={540} y={1020} len={520} tilt={6} w={44} /></svg>
       <BrandPill platform={platform} />
-      <div style={{position: 'absolute', left: 50, right: 50, top: 290, textAlign: 'center', fontFamily: FONT_BN, fontWeight: 800, fontSize: 112, lineHeight: 1.12, color: C.text, textShadow: '0 8px 0 rgba(0,0,0,0.4)'}}>পদ্মা সেতু দাঁড়িয়ে আছে<br /><span style={{color: YEL}}>১২০ মিটার</span> নিচের ভরে</div>
+      <div style={{position: 'absolute', left: 50, right: 50, top: 290, textAlign: 'center', fontFamily: FONT_BN, fontWeight: 800, fontSize: 112, lineHeight: 1.12, color: C.text, textShadow: '0 8px 0 rgba(0,0,0,0.4)'}}>পদ্মা সেতুর ভর<br /><span style={{color: YEL}}>১২০ মিটার</span> নিচে</div>
     </AbsoluteFill>
   );
 };
