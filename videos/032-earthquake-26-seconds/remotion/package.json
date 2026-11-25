@@ -1,0 +1,19 @@
+{
+  "name": "v032-quake",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts Video out/v030.mp4 --crf=20"
+  },
+  "dependencies": {
+    "@fontsource/poppins": "5.1.0",
+    "@remotion/cli": "4.0.545",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.545"
+  },
+  "devDependencies": {
+    "@types/react": "19.0.0",
+    "typescript": "5.6.3"
+  }
+}
