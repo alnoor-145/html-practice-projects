@@ -5,7 +5,9 @@ Two kinds of video work. Pick the matching rules:
   `EXPLAINER_VIDEO_INSTRUCTIONS.md` exactly (Bangla, short replies; asset loop →
   analysis → the three questions → build → verify stills → preview mode by default).
   @EXPLAINER_VIDEO_INSTRUCTIONS.md
-- **Story cartoon with characters (2D animation)** → the rules below.
+- **Story cartoon with characters (2D or 3D animation)** → follow
+  `ANIMATION_VIDEO_INSTRUCTIONS.md` exactly, plus the lessons below.
+  @ANIMATION_VIDEO_INSTRUCTIONS.md
 
 # 2D cartoon requests
 
